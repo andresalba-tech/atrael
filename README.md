@@ -966,6 +966,20 @@ External Web Information
         ↓
 Final Analysis
 
+```
+# 🧪 Automated Testing
+
+Atrael includes automated backend regression tests for critical functionality.
+
+Current test suite:
+
+```text
+Test Files: 5 passed
+Tests:      31 passed
+
+...
+---
+
 # 🔐 Privacy
 
 Atrael is designed around local processing.
@@ -1102,7 +1116,5 @@ Senior Software Developer / Full-Stack AI Developer
 LinkedIn:
 
 https://www.linkedin.com/in/andr%C3%A9s-eduardo-alba-matallana/
-
-Atrael was created as a practical exploration of **local AI engineering, multimodal inference, large-document processing, AI performance optimization, privacy-first architecture, and full-stack application development**.
 
 Atrael was created as a practical exploration of **local AI engineering, multimodal inference, large-document processing, AI performance optimization, privacy-first architecture, and full-stack application development**.
