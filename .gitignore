@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Builds
+dist/
+frontend/dist/
+
+# Local files / uploads
+backend/local-data/
+local-data/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Temporary test payloads
+test-local.json
+test-atrael.json
+backend/test-local.json
+backend/test-atrael.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
