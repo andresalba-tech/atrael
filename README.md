@@ -977,9 +977,7 @@ Current test suite:
 Test Files: 5 passed
 Tests:      31 passed
 
-...
----
-
+```
 # 🔐 Privacy
 
 Atrael is designed around local processing.
