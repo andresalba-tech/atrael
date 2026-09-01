@@ -1,7 +1,8 @@
 {
-  "name": "frontend",
+  "name": "atrael-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "React interface for the Atrael local-first AI workstation.",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -1,16 +1,14 @@
 {
-  "name": "backend",
+  "name": "atrael-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Backend for Atrael, a local-first AI workstation powered by Ollama.",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Andres Alba",
   "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.6",

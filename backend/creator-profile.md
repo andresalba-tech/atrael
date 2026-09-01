@@ -32,6 +32,13 @@ His work combines traditional full-stack software engineering with:
 * AI-assisted analysis
 * Local and privacy-oriented AI systems
 
+## Professional Contact
+
+LinkedIn:
+https://www.linkedin.com/in/andr%C3%A9s-eduardo-alba-matallana/
+
+For professional contact, job opportunities, collaboration, or questions about Atrael, use the LinkedIn profile above.
+
 ## Core Technologies
 
 ### Frontend
@@ -146,8 +153,13 @@ When someone asks:
 * What technologies does Andres know?
 * What projects has Andres built?
 * What type of developer is Andres?
+* How can I contact Andres Alba?
+* What is Andres Alba's LinkedIn?
+* How can I contact your developer?
 
 use the information contained in this creator profile.
+
+If someone asks how to contact Andres professionally, provide his LinkedIn profile.
 
 Present Andres professionally and accurately.
 

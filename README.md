@@ -1,6 +1,6 @@
 # Atrael
 
-> **A private, local-first AI workstation for chat, vision, documents, spreadsheets, and large-scale document analysis — powered entirely by locally hosted AI models.**
+> **A private, local-first AI workstation for chat, vision, documents, spreadsheets, large-scale document analysis, and optional web-assisted research — powered by locally hosted AI models.**
 
 **Atrael** is a full-stack local AI application built with **React, Node.js, Ollama, and multimodal language models**.
 
@@ -16,6 +16,10 @@ It turns a consumer computer into a private AI workstation capable of:
 * Hierarchically consolidating large sets of findings
 * Reading responses aloud
 * Reporting inference performance in real time
+* Optional web-assisted AI responses
+* Web-assisted document analysis
+* Privacy-oriented local search-query generation
+* Separation between document evidence and external web information
 
 All core AI inference runs locally.
 
@@ -25,6 +29,24 @@ No Anthropic API.
 No cloud AI dependency required.
 
 ---
+
+## Screenshots
+
+### Local AI
+
+![Atrael Local AI](docs/screenshots/atrael.png)
+
+### Local AI Chat
+
+![Atrael Local AI Chat](docs/screenshots/atrael-chat.png)
+
+### Document Intelligence
+
+![Atrael Document Analysis](docs/screenshots/atrael-document-analysis.png)
+
+### Web-Assisted Analysis
+
+![Atrael Web Analysis](docs/screenshots/atrael-web-analysis.png)
 
 ## Why Atrael?
 
@@ -807,7 +829,7 @@ Exact requirements depend on model size, context size, and quantization.
 ## Clone
 
 ```bash
-git clone https://github.com/<your-username>/atrael.git
+git clone https://github.com/andresalba-tech/atrael
 cd atrael
 ```
 
@@ -928,6 +950,21 @@ Current implementation includes:
 * [x] Local-first AI architecture
 
 ---
+
+# 🌐 Optional Web Access
+
+Atrael can optionally complement local AI inference with web search.
+
+When web access is enabled, Atrael generates a privacy-oriented search query locally and retrieves external search results that can be supplied to the local model as additional context.
+
+For document analysis, Atrael keeps the two evidence sources conceptually separate:
+
+```text
+Document Evidence
+        +
+External Web Information
+        ↓
+Final Analysis
 
 # 🔐 Privacy
 
@@ -1059,6 +1096,13 @@ Until a license is explicitly added, the repository should not be assumed to gra
 # Author
 
 **Andres Alba**
-Software Developer
+
+Senior Software Developer / Full-Stack AI Developer
+
+LinkedIn:
+
+https://www.linkedin.com/in/andr%C3%A9s-eduardo-alba-matallana/
+
+Atrael was created as a practical exploration of **local AI engineering, multimodal inference, large-document processing, AI performance optimization, privacy-first architecture, and full-stack application development**.
 
 Atrael was created as a practical exploration of **local AI engineering, multimodal inference, large-document processing, AI performance optimization, privacy-first architecture, and full-stack application development**.
