@@ -1630,99 +1630,125 @@ const handleSaveChat =
   };
 
   return (
-    <main className="app">
-      <header className="header">
-        <div>
-          <h1>Andres Alba&apos;s Atrael</h1>
+    <div className="cockpit-chassis">
+      <div className="chassis-bolt top-left" aria-hidden="true" />
+      <div className="chassis-bolt top-right" aria-hidden="true" />
+      <div className="chassis-bolt bottom-left" aria-hidden="true" />
+      <div className="chassis-bolt bottom-right" aria-hidden="true" />
 
-          <div className="local-status">
-            <span className="status-dot" />
-            LOCAL AI
+      <main className="app">
+        <header className="header">
+          <div className="brand-cluster">
+            <div className="brand-title-row">
+              <h1 className="brand-title">Atrael</h1>
+              <div className="devil-emblem" aria-hidden="true">
+                <svg viewBox="0 0 36 36" className="devil-svg">
+                  <path
+                    d="M4 6 L12 17 L18 12 L24 17 L32 6 L28 20 C28 28 23 34 18 36 C13 34 8 28 8 20 Z"
+                    fill="#150508"
+                    stroke="#ff2a55"
+                    strokeWidth="1.8"
+                  />
+                  <polygon points="12,18 17,21 12,23" fill="#ff1a40" />
+                  <polygon points="24,18 19,21 24,23" fill="#ff1a40" />
+                  <path d="M15 28 Q18 31 21 28" fill="none" stroke="#ff2a55" strokeWidth="1.2" />
+                </svg>
+              </div>
+            </div>
+
+            <div className="local-status">
+              <span className="status-dot" />
+              <span className="status-label">LOCAL AI</span>
+              <svg className="heartbeat-line" viewBox="0 0 54 14" preserveAspectRatio="none" aria-hidden="true">
+                <path
+                  d="M0 7 L16 7 L19 2 L23 13 L26 4 L29 9 L32 7 L54 7"
+                  fill="none"
+                  stroke="#22c55e"
+                  strokeWidth="1.6"
+                />
+              </svg>
+            </div>
           </div>
-        </div>
 
-        <div className="header-right">
-          {/* MODEL */}
-          <button
-            type="button"
-            className="clear-button"
-            onClick={() =>
-              setSelectedModel(
-                (current) =>
-                  current === "local"
-                    ? "atrael"
-                    : "local"
-              )
-            }
-            disabled={loading}
-            title={
-              selectedModel === "local"
-                ? "Qwen 3.5 4B · click to switch to Atrael"
-                : "Qwen 27B Uncensored · click to switch to Local"
-            }
-          >
-            {selectedModel === "local"
-              ? "💻 LOCAL"
-              : "😈 ATRAEL"}
-          </button>
+          <div className="header-right">
+            {/* MODEL */}
+            <button
+              type="button"
+              className={`tactical-button model-button clear-button ${selectedModel}`}
+              onClick={() =>
+                setSelectedModel((current) =>
+                  current === "local" ? "atrael" : "local"
+                )
+              }
+              disabled={loading}
+              title={
+                selectedModel === "local"
+                  ? "Qwen 3.5 4B · click to switch to Atrael"
+                  : "Qwen 27B Uncensored · click to switch to Local"
+              }
+            >
+              <span className={`button-led ${selectedModel === "local" ? "led-blue" : "led-red"}`} />
+              <span className="button-text">
+                {selectedModel === "local" ? "LOCAL" : "ATRAEL"}
+              </span>
+            </button>
 
-          {/* MODE */}
-          <button
-            type="button"
-            className="clear-button"
-            onClick={() =>
-              setMode(
-                (current) =>
-                  current === "fast"
-                    ? "quality"
-                    : "fast"
-              )
-            }
-            disabled={loading}
-            title={
-              mode === "fast"
-                ? "16K · instant · click for Quality"
-                : "32K · reasoning · click for Fast"
-            }
-          >
-            {mode === "fast"
-              ? "⚡ FAST"
-              : "🧠 QUALITY"}
-          </button>
+            {/* MODE */}
+            <button
+              type="button"
+              className="tactical-button mode-button clear-button"
+              onClick={() =>
+                setMode((current) =>
+                  current === "fast" ? "quality" : "fast"
+                )
+              }
+              disabled={loading}
+              title={
+                mode === "fast"
+                  ? "16K · instant · click for Quality"
+                  : "32K · reasoning · click for Fast"
+              }
+            >
+              <span className="button-glyph">⚡</span>
+              <span className="button-text">
+                {mode === "fast" ? "FAST" : "QUALITY"}
+              </span>
+            </button>
 
-          {/* WEB */}
-          <button
-            type="button"
-            className="clear-button"
-            onClick={() =>
-              setWebAccess(
-                (current) => !current
-              )
-            }
-            disabled={loading}
-            aria-pressed={webAccess}
-            title={
-              webAccess
-                ? "Internet search enabled"
-                : "Local only"
-            }
-          >
-            {webAccess
-              ? "🌐 WEB ON"
-              : "🔒 WEB OFF"}
-          </button>
+            {/* WEB */}
+            <button
+              type="button"
+              className={`tactical-button web-button clear-button ${webAccess ? "active" : ""}`}
+              onClick={() =>
+                setWebAccess((current) => !current)
+              }
+              disabled={loading}
+              aria-pressed={webAccess}
+              title={
+                webAccess
+                  ? "Internet search enabled"
+                  : "Local only"
+              }
+            >
+              <span className="button-glyph">{webAccess ? "🌐" : "🔒"}</span>
+              <span className="button-text">
+                {webAccess ? "WEB ON" : "WEB OFF"}
+              </span>
+            </button>
 
-          {/* CLEAR */}
-          <button
-            type="button"
-            className="clear-button"
-            onClick={clearChat}
-            disabled={loading}
-          >
-            Clear Chat
-          </button>
-        </div>
-      </header>
+            {/* CLEAR */}
+            <button
+              type="button"
+              className="tactical-button clear-button clear-chat-btn"
+              onClick={clearChat}
+              disabled={loading}
+              aria-label="Clear Chat"
+            >
+              <span className="button-glyph" aria-hidden="true">🗑</span>
+              <span className="button-text">Clear Chat</span>
+            </button>
+          </div>
+        </header>
 
       <section className="workspace">
         {/* ========================================= */}
@@ -1887,6 +1913,22 @@ const handleSaveChat =
             </button>
           </div>
 
+          {/* RADAR HUD TELEMETRY */}
+          <div className="sidebar-hud" aria-hidden="true">
+            <div className="radar-frame">
+              <div className="radar-grid" />
+              <div className="radar-sweep" />
+              <div className="radar-crosshair" />
+              <div className="radar-dot dot-1" />
+              <div className="radar-dot dot-2" />
+            </div>
+            <div className="hud-readout">
+              <span>SYS // NODE:3050</span>
+              <span>GPU // RTX 4060 8GB</span>
+              <span>NET // AIRGAPPED LOCAL</span>
+            </div>
+          </div>
+
         </aside>
 
         {/* ========================================= */}
@@ -1898,18 +1940,17 @@ const handleSaveChat =
           <section className="chat">
             {messages.length ===
               0 && (
-              <div className="empty">
-                <h2>
+              <div className="empty cyber-empty">
+                <div className="cyber-glow-orb" aria-hidden="true" />
+                <h2 className="cyber-heading">
                   Ask anything
                 </h2>
 
-                <p>
-                  Chat, images,
-                  documents and
-                  spreadsheets.
+                <p className="cyber-subtext">
+                  Chat, images, documents and spreadsheets.
                 </p>
 
-                <span className="privacy">
+                <span className="privacy cyber-privacy">
                   ● 100% local
                 </span>
               </div>
@@ -2532,38 +2573,65 @@ const handleSaveChat =
                 </button>
               </div>
 
-              {/* SEND / STOP */}
+              {/* CENTER HEATSINK & BUS LANES */}
+              <div className="composer-center-circuits" aria-hidden="true">
+                <svg className="bus-lane-svg" viewBox="0 0 160 20" preserveAspectRatio="none">
+                  <path d="M0 10 L35 10 L45 3 L115 3 L125 10 L160 10" stroke="#ff2a55" strokeWidth="1.6" fill="none" opacity="0.85" />
+                  <path d="M15 17 L50 17 L60 10 L100 10 L110 17 L145 17" stroke="#ff2a55" strokeWidth="1" fill="none" opacity="0.5" />
+                  <circle cx="45" cy="3" r="2.2" fill="#ff2a55" />
+                  <circle cx="115" cy="3" r="2.2" fill="#ff2a55" />
+                  <circle cx="60" cy="10" r="1.8" fill="#ff2a55" />
+                  <circle cx="100" cy="10" r="1.8" fill="#ff2a55" />
+                </svg>
+                <div className="heatsink-fins">
+                  <span /><span /><span /><span /><span /><span /><span /><span /><span />
+                </div>
+              </div>
 
-              {loading ? (
-                <button
-                  className="stop-button"
-                  onClick={
-                    stopGeneration
-                  }
-                >
-                  ■ Stop
-                </button>
-              ) : (
-                <button
-                  className="send-button"
-                  onClick={
-                    sendMessage
-                  }
-                  disabled={
-                    uploadingDocument ||
-                    (!input.trim() &&
-                      !selectedImage &&
-                      !selectedDocument)
-                  }
-                >
-                  Send
-                </button>
-              )}
+              {/* SEND / STOP (REACTOR CORE) */}
+              <div className="composer-right">
+                {loading ? (
+                  <button
+                    type="button"
+                    className="stop-button reactor-button stop"
+                    onClick={stopGeneration}
+                    title="Stop generation"
+                    aria-label="Stop"
+                  >
+                    <span className="reactor-ring outer" />
+                    <span className="reactor-ring inner" />
+                    <span className="reactor-core stop-core">
+                      <span className="stop-square" />
+                    </span>
+                    <span className="reactor-label">Stop</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="send-button reactor-button send"
+                    onClick={sendMessage}
+                    disabled={
+                      uploadingDocument ||
+                      (!input.trim() &&
+                        !selectedImage &&
+                        !selectedDocument)
+                    }
+                    title="Send prompt"
+                    aria-label="Send"
+                  >
+                    <span className="reactor-ring outer" />
+                    <span className="reactor-ring inner" />
+                    <span className="reactor-core send-core" />
+                    <span className="reactor-label">Send</span>
+                  </button>
+                )}
+              </div>
             </div>
           </section>
         </section>
       </section>
     </main>
+  </div>
   );
 }
 
