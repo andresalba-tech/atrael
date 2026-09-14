@@ -167,22 +167,32 @@ textarea {
     0 0 40px rgba(0, 229, 255, 0.3);
 }
 
-.brand-emblem {
+.brand-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.devil-emblem {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.devil-mask-img,
 .devil-mask-svg {
-  width: 28px;
-  height: 28px;
-  filter: drop-shadow(0 0 8px var(--neon-red-glow));
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  filter: drop-shadow(0 0 10px rgba(255, 42, 85, 0.7));
+  border: 1px solid rgba(255, 42, 85, 0.4);
   animation: emblem-pulse 3s ease-in-out infinite alternate;
 }
 
 @keyframes emblem-pulse {
-  0% { filter: drop-shadow(0 0 6px var(--neon-red-glow)); opacity: 0.88; }
-  100% { filter: drop-shadow(0 0 14px #ff2a55); opacity: 1; }
+  0% { filter: drop-shadow(0 0 8px rgba(255, 42, 85, 0.5)); transform: scale(0.98); }
+  100% { filter: drop-shadow(0 0 16px #ff2a55); transform: scale(1.02); }
 }
 
 .local-ai-tag {

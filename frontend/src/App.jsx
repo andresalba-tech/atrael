@@ -1642,17 +1642,11 @@ const handleSaveChat =
             <div className="brand-title-row">
               <h1 className="brand-title">Atrael</h1>
               <div className="devil-emblem" aria-hidden="true">
-                <svg viewBox="0 0 36 36" className="devil-svg">
-                  <path
-                    d="M4 6 L12 17 L18 12 L24 17 L32 6 L28 20 C28 28 23 34 18 36 C13 34 8 28 8 20 Z"
-                    fill="#150508"
-                    stroke="#ff2a55"
-                    strokeWidth="1.8"
-                  />
-                  <polygon points="12,18 17,21 12,23" fill="#ff1a40" />
-                  <polygon points="24,18 19,21 24,23" fill="#ff1a40" />
-                  <path d="M15 28 Q18 31 21 28" fill="none" stroke="#ff2a55" strokeWidth="1.2" />
-                </svg>
+                <img
+                  src="/Atrael-Icon.png"
+                  alt="Atrael Emblem"
+                  className="devil-mask-img"
+                />
               </div>
             </div>
 
