@@ -1210,14 +1210,31 @@ const clearChat =
             return;
           }
 
-          setProjects(
-            storedProjects
-          );
-
           if (
-            storedProjects.length >
+            storedProjects.length ===
             0
           ) {
+            const defaultProject =
+              await createProject(
+                "Main"
+              );
+
+            if (cancelled) {
+              return;
+            }
+
+            setProjects([
+              defaultProject,
+            ]);
+
+            setSelectedProjectId(
+              defaultProject.id
+            );
+          } else {
+            setProjects(
+              storedProjects
+            );
+
             setSelectedProjectId(
               storedProjects[0].id
             );
@@ -1544,7 +1561,7 @@ const handleSaveChat =
 
         setChats([]);
 
-        // Select another project if one exists.
+        // Select another project if one exists, or recreate Main.
         if (
           updatedProjects.length >
           0
@@ -1553,8 +1570,17 @@ const handleSaveChat =
             updatedProjects[0].id
           );
         } else {
+          const defaultProject =
+            await createProject(
+              "Main"
+            );
+
+          setProjects([
+            defaultProject,
+          ]);
+
           setSelectedProjectId(
-            null
+            defaultProject.id
           );
         }
       }
