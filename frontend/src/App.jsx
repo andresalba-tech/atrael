@@ -19,7 +19,7 @@ import {
 } from "./storage/chatDb";
 
 const API =
-  "http://localhost:3001";
+  import.meta.env.VITE_API_URL || "http://localhost:3050";
 
 function App() {
   const [
@@ -1681,8 +1681,8 @@ const handleSaveChat =
             disabled={loading}
             title={
               mode === "fast"
-                ? "4K · instant · click for Quality"
-                : "8K · reasoning · click for Fast"
+                ? "16K · instant · click for Quality"
+                : "32K · reasoning · click for Fast"
             }
           >
             {mode === "fast"

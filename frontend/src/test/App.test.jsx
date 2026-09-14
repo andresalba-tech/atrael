@@ -56,7 +56,7 @@ describe("Atrael UI", () => {
         "button",
         {
           name:
-            /FAST.*4K.*instant/i,
+            /FAST.*16K.*instant/i,
         }
       )
     ).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe("Atrael UI", () => {
         "button",
         {
           name:
-            /QUALITY.*8K.*reasoning/i,
+            /QUALITY.*32K.*reasoning/i,
         }
       )
     ).toBeInTheDocument();
@@ -140,7 +140,7 @@ describe("Atrael UI", () => {
         "button",
         {
             name:
-            /FAST.*4K.*instant/i,
+            /FAST.*16K.*instant/i,
         }
         );
 
@@ -149,7 +149,7 @@ describe("Atrael UI", () => {
         "button",
         {
             name:
-            /QUALITY.*8K.*reasoning/i,
+            /QUALITY.*32K.*reasoning/i,
         }
         );
 
@@ -261,7 +261,7 @@ describe("Atrael UI", () => {
         "button",
         {
             name:
-            /QUALITY.*8K.*reasoning/i,
+            /QUALITY.*32K.*reasoning/i,
         }
         );
 
@@ -309,7 +309,7 @@ describe("Atrael UI", () => {
     expect(
         url
     ).toBe(
-        "http://localhost:3001/api/chat"
+        "http://localhost:3050/api/chat"
     );
 
     const body =
@@ -1055,7 +1055,7 @@ describe("Atrael UI", () => {
     expect(
         url
     ).toBe(
-        "http://localhost:3001/api/chat"
+        "http://localhost:3050/api/chat"
     );
 
     const body =
@@ -1328,7 +1328,7 @@ describe("Atrael UI", () => {
     expect(
         url
     ).toBe(
-        "http://localhost:3001/api/files/upload"
+        "http://localhost:3050/api/files/upload"
     );
 
     expect(
@@ -1521,7 +1521,7 @@ describe("Atrael UI", () => {
     expect(
         url
     ).toBe(
-        "http://localhost:3001/api/document/analyze"
+        "http://localhost:3050/api/document/analyze"
     );
 
     expect(
@@ -1658,7 +1658,7 @@ describe("Atrael UI", () => {
         "button",
         {
             name:
-            /QUALITY.*8K.*reasoning/i,
+            /QUALITY.*32K.*reasoning/i,
         }
         )
     );
@@ -1723,7 +1723,7 @@ describe("Atrael UI", () => {
     expect(
         url
     ).toBe(
-        "http://localhost:3001/api/document/analyze"
+        "http://localhost:3050/api/document/analyze"
     );
 
     const body =
@@ -1866,7 +1866,7 @@ describe("Atrael UI", () => {
     expect(
         url
     ).toBe(
-        "http://localhost:3001/api/files/document-remove-123"
+        "http://localhost:3050/api/files/document-remove-123"
     );
 
     expect(
@@ -2281,7 +2281,7 @@ describe("Atrael UI", () => {
     expect(
         deleteUrl
     ).toBe(
-        "http://localhost:3001/api/files/document-clear-123"
+        "http://localhost:3050/api/files/document-clear-123"
     );
 
     expect(

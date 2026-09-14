@@ -367,7 +367,7 @@ describe("POST /api/document/analyze", () => {
 
         expect(
         finalRequest.options.num_ctx
-        ).toBe(4096);
+        ).toBe(16384);
 
         // --------------------------------
         // STREAM RETURNED TO FRONTEND

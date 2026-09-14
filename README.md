@@ -105,11 +105,11 @@ Browser
    │
    ▼
 React
-localhost:5173
+localhost:5180
    │
    ▼
 Node / Express
-localhost:3001
+localhost:3050
    │
    ▼
 Ollama
@@ -242,7 +242,7 @@ Either model can use the available processing modes.
 ## FAST
 
 ```text
-Context: 4096
+Context: 16384
 Thinking: OFF
 ```
 
@@ -262,7 +262,7 @@ Recommended for:
 ## QUALITY
 
 ```text
-Context: 8192
+Context: 32768
 Thinking: ON
 ```
 
@@ -711,14 +711,14 @@ No dedicated external text-to-speech service is required.
 ```text
 ┌─────────────────────────────┐
 │       React Frontend        │
-│      localhost:5173         │
+│      localhost:5180         │
 └──────────────┬──────────────┘
                │
                │ HTTP / Streaming
                ▼
 ┌─────────────────────────────┐
 │    Node / Express Backend   │
-│      localhost:3001         │
+│      localhost:3050         │
 └──────────────┬──────────────┘
                │
        ┌───────┴──────────┐
@@ -846,7 +846,7 @@ node server.js
 Backend:
 
 ```text
-http://localhost:3001
+http://localhost:3050
 ```
 
 ---
@@ -864,7 +864,7 @@ npm run dev
 Vite normally exposes:
 
 ```text
-http://localhost:5173
+http://localhost:5180
 ```
 
 ---

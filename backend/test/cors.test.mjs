@@ -25,7 +25,7 @@ describe(
             )
             .set(
               "Origin",
-              "http://localhost:5173"
+              "http://localhost:5180"
             )
             .set(
               "Access-Control-Request-Method",
@@ -37,7 +37,7 @@ describe(
             "access-control-allow-origin"
           ]
         ).toBe(
-          "http://localhost:5173"
+          "http://localhost:5180"
         );
       }
     );

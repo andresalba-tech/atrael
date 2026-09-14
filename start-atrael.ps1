@@ -9,8 +9,8 @@ $root = "C:\Mine\Programas\ollama\Atrael"
 $backendPath = Join-Path $root "backend"
 $frontendPath = Join-Path $root "frontend"
 
-$backendPort = 3001
-$frontendPort = 5173
+$backendPort = 3050
+$frontendPort = 5180
 
 $browserProfile = Join-Path $env:TEMP "AtraelBrowser"
 
@@ -119,6 +119,25 @@ function Stop-AtraelBrowser {
 }
 
 
+function Stop-PortProcess {
+    param(
+        [int]$Port
+    )
+
+    try {
+        $connections = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
+        foreach ($conn in $connections) {
+            if ($conn.OwningProcess -gt 0) {
+                taskkill /PID $conn.OwningProcess /F 2>$null | Out-Null
+            }
+        }
+    }
+    catch {
+        # Ignore port cleanup errors.
+    }
+}
+
+
 function Show-AtraelError {
     param(
         [string]$Message
@@ -154,10 +173,12 @@ try {
 
 
     # --------------------------------------------------
-    # CLEAN OLD ATRAEL BROWSER PROCESSES
+    # CLEAN OLD ATRAEL BROWSER & PORT PROCESSES
     # --------------------------------------------------
 
     Stop-AtraelBrowser
+    Stop-PortProcess -Port $backendPort
+    Stop-PortProcess -Port $frontendPort
 
 
     # --------------------------------------------------
@@ -228,7 +249,7 @@ try {
             -FilePath "cmd.exe" `
             -ArgumentList @(
                 "/k",
-                "npm run dev -- --host 127.0.0.1 --port 5173 --strictPort"
+                "npm run dev -- --host 127.0.0.1 --port $frontendPort --strictPort"
             ) `
             -WorkingDirectory $frontendPath `
             -WindowStyle Hidden `

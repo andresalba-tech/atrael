@@ -15,7 +15,7 @@ const crypto = require("crypto");
 
 const app = express();
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3050;
 const OLLAMA_URL = "http://127.0.0.1:11434";
 const MODEL = "qwen3.5:4b";
 
@@ -64,14 +64,14 @@ const MODES = {
   fast: {
     label: "FAST",
     think: false,
-    numCtx: 4096,
+    numCtx: 16384,
     temperature: 0.4,
   },
 
   quality: {
     label: "QUALITY",
     think: true,
-    numCtx: 8192,
+    numCtx: 32768,
     temperature: 0.3,
   },
 };
@@ -768,6 +768,8 @@ const ALLOWED_ORIGINS =
   new Set([
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://localhost:5180",
+    "http://127.0.0.1:5180",
   ]);
 
 app.use(
@@ -2282,6 +2284,9 @@ app.post(
 
                   temperature:
                     config.temperature,
+
+                  num_predict:
+                    -1,
                 },
               }),
           }
@@ -2986,6 +2991,9 @@ ${chunk}
 
                   temperature:
                     config.temperature,
+
+                  num_predict:
+                    -1,
                 },
 
                 messages: [
@@ -3320,11 +3328,11 @@ function startServer() {
       );
 
       console.log(
-        "FAST    → 4K / thinking OFF"
+        "FAST    → 16K / thinking OFF"
       );
 
       console.log(
-        "QUALITY → 8K / thinking ON"
+        "QUALITY → 32K / thinking ON"
       );
 
       console.log("");

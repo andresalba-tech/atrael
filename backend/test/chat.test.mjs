@@ -126,7 +126,7 @@ describe("POST /api/chat", () => {
 
     expect(
       ollamaRequest.options.num_ctx
-    ).toBe(4096);
+    ).toBe(16384);
 
     expect(
       response.text
@@ -229,7 +229,7 @@ describe("POST /api/chat", () => {
 
     expect(
         ollamaRequest.options.num_ctx
-    ).toBe(4096);
+    ).toBe(16384);
 
     expect(
         response.text
@@ -318,7 +318,7 @@ describe("POST /api/chat", () => {
 
     expect(
         ollamaRequest.options.num_ctx
-    ).toBe(8192);
+    ).toBe(32768);
 
     expect(
         ollamaRequest.options.temperature
