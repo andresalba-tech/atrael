@@ -1068,18 +1068,38 @@ const clearChat =
       return null;
     }
 
-    const portugueseHints =
-      /\b(não|você|voce|está|estao|estão|isso|isto|com|uma|um|do|da|dos|das|no|na|nos|nas|são|sao|mais|fazer|também|tambem|muito|obrigado|obrigada|qualquer|então|entao|quando|pelo|pela|pelos|pelas|ele|ela|eles|elas|seus|suas|têm|tem)\b/i;
+    // Language detection using unambiguous tokens and frequency scoring
+    const ptCharCount = (text.match(/[ãõçÃÕÇ]/g) || []).length;
+    const esCharCount = (text.match(/[¿¡ñÑ]/g) || []).length;
 
-    const spanishHints =
-      /\b(el|la|los|las|del|al|con|una|un|por|como|esto|esta|puede|tiene|sus|pero|sobre|entre|cuando|todo|también|tambien|hacer|desde|nosotros|ustedes|bien|muy|hola|gracias|estos|estas|para|que)\b/i;
+    // English markers that never appear in Portuguese or Spanish:
+    const englishWords =
+      /\b(the|this|that|these|those|with|from|have|has|had|what|which|where|when|who|how|there|their|they|them|your|you|would|could|should|about|been|will|just|like|some|into|other|than|then|hello|please|because|think|know|make|good|first|after|before)\b/gi;
+
+    // Spanish markers that do not collide with English:
+    const spanishWords =
+      /\b(el|los|las|del|al|por|como|esto|esta|estos|estas|puede|pueden|tiene|tienen|sus|pero|sobre|entre|cuando|todo|todos|también|tambien|hacer|desde|nosotros|ustedes|bien|hola|gracias|bueno|buena|buenas|buenos|porque|entonces|ahora|siempre|nunca)\b/gi;
+
+    // Portuguese markers that do not collide with English (e.g. no "do", "no", "a", "as"):
+    const portugueseWords =
+      /\b(não|você|voce|vocês|voces|está|estão|estao|isso|isto|aquilo|uma|umas|dos|das|são|sao|mais|fazer|também|tambem|muito|muitos|obrigado|obrigada|qualquer|então|entao|quando|pelo|pela|pelos|pelas|ele|ela|eles|elas|seus|suas|olá|ola|abraço|abraco|com|conversa|têm)\b/gi;
+
+    const enMatches = (text.match(englishWords) || []).length;
+    const esMatches = (text.match(spanishWords) || []).length + (esCharCount * 2);
+    const ptMatches = (text.match(portugueseWords) || []).length + (ptCharCount * 2);
 
     let preferredLanguage = "en";
 
-    if (portugueseHints.test(text)) {
-      preferredLanguage = "pt";
-    } else if (spanishHints.test(text)) {
+    if (esMatches > enMatches && esMatches >= ptMatches) {
       preferredLanguage = "es";
+    } else if (ptMatches > enMatches && ptMatches > esMatches) {
+      preferredLanguage = "pt";
+    } else if (enMatches >= esMatches && enMatches >= ptMatches && enMatches > 0) {
+      preferredLanguage = "en";
+    } else if (esCharCount > ptCharCount) {
+      preferredLanguage = "es";
+    } else if (ptCharCount > esCharCount) {
+      preferredLanguage = "pt";
     }
 
     const maleIdentifiers = [
