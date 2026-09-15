@@ -1,6 +1,14 @@
 $ErrorActionPreference = "Stop"
 
 # ==================================================
+# HARDWARE ACCELERATION & OLLAMA OPTIMIZATION
+# Target: Lenovo LOQ 15AHP9 (RTX 4060 Laptop 8GB + Ryzen 7 8845HS 8 Cores / 64GB RAM)
+# ==================================================
+$env:OLLAMA_FLASH_ATTENTION = "1"
+$env:OLLAMA_NUM_PARALLEL = "1"
+$env:OLLAMA_NUM_THREAD = "8"
+
+# ==================================================
 # ATRAEL DESKTOP LAUNCHER
 # ==================================================
 

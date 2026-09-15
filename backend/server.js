@@ -17,6 +17,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3050;
 const OLLAMA_URL = "http://127.0.0.1:11434";
+const OLLAMA_NUM_THREAD = parseInt(process.env.OLLAMA_NUM_THREAD || "8", 10);
 const MODEL = "qwen3.5:4b";
 
 const MODELS = {
@@ -1208,6 +1209,7 @@ async function callOllama({
           options: {
             num_ctx: numCtx,
             temperature,
+            num_thread: OLLAMA_NUM_THREAD,
           },
         }),
       }
@@ -2287,6 +2289,9 @@ app.post(
 
                   num_predict:
                     -1,
+
+                  num_thread:
+                    OLLAMA_NUM_THREAD,
                 },
               }),
           }
@@ -2994,6 +2999,9 @@ ${chunk}
 
                   num_predict:
                     -1,
+
+                  num_thread:
+                    OLLAMA_NUM_THREAD,
                 },
 
                 messages: [
