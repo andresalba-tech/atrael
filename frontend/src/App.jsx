@@ -130,14 +130,9 @@ function App() {
   useEffect(() => {
     const loadVoices = () => {
       const voices =
-        window.speechSynthesis.getVoices();
+        window.speechSynthesis.getVoices() || [];
   
-      setAvailableVoices(
-        voices.filter(
-          (voice) =>
-            voice.localService
-        )
-      );
+      setAvailableVoices(voices);
     };
   
     loadVoices();
@@ -1067,44 +1062,59 @@ const clearChat =
     text
   ) => {
     if (
-      availableVoices.length ===
-      0
+      !availableVoices ||
+      availableVoices.length === 0
     ) {
       return null;
     }
-  
+
+    const portugueseHints =
+      /\b(não|você|voce|está|estao|estão|isso|isto|com|uma|um|do|da|dos|das|no|na|nos|nas|são|sao|mais|fazer|também|tambem|muito|obrigado|obrigada|qualquer|então|entao|quando|pelo|pela|pelos|pelas|ele|ela|eles|elas|seus|suas|têm|tem)\b/i;
+
     const spanishHints =
-      /\b(el|la|los|las|que|para|con|una|un|por|como|esto|esta|puede|tiene)\b/i;
-  
-    const appearsSpanish =
-      spanishHints.test(text);
-  
-    const preferredLanguage =
-      appearsSpanish
-        ? "es"
-        : "en";
-  
-    return (
-      availableVoices.find(
-        (voice) =>
-          voice.lang
-            ?.toLowerCase()
-            .startsWith(
-              preferredLanguage
-            ) &&
+      /\b(el|la|los|las|del|al|con|una|un|por|como|esto|esta|puede|tiene|sus|pero|sobre|entre|cuando|todo|también|tambien|hacer|desde|nosotros|ustedes|bien|muy|hola|gracias|estos|estas|para|que)\b/i;
+
+    let preferredLanguage = "en";
+
+    if (portugueseHints.test(text)) {
+      preferredLanguage = "pt";
+    } else if (spanishHints.test(text)) {
+      preferredLanguage = "es";
+    }
+
+    const langVoices = availableVoices.filter(
+      (voice) =>
+        voice.lang
+          ?.toLowerCase()
+          .startsWith(preferredLanguage)
+    );
+
+    if (langVoices.length > 0) {
+      return (
+        langVoices.find((voice) =>
           voice.name
             ?.toLowerCase()
-            .includes(
-              "microsoft"
-            )
-      ) ||
-      availableVoices.find(
-        (voice) =>
-          voice.lang
+            .includes("natural")
+        ) ||
+        langVoices.find((voice) =>
+          voice.name
             ?.toLowerCase()
-            .startsWith(
-              preferredLanguage
-            )
+            .includes("microsoft")
+        ) ||
+        langVoices[0]
+      );
+    }
+
+    return (
+      availableVoices.find((voice) =>
+        voice.name
+          ?.toLowerCase()
+          .includes("natural")
+      ) ||
+      availableVoices.find((voice) =>
+        voice.name
+          ?.toLowerCase()
+          .includes("microsoft")
       ) ||
       availableVoices[0]
     );
