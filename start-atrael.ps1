@@ -169,6 +169,57 @@ function Show-AtraelError {
 }
 
 
+function Ensure-OllamaRunning {
+    Write-Host "Checking Ollama status..."
+    $ollamaReady = $false
+    try {
+        $res = Invoke-WebRequest -Uri "http://127.0.0.1:11434/api/version" -UseBasicParsing -TimeoutSec 1
+        if ($res.StatusCode -eq 200) {
+            $ollamaReady = $true
+        }
+    }
+    catch {
+    }
+
+    if (-not $ollamaReady) {
+        Write-Host "Ollama is not running. Starting Ollama..."
+        $ollamaApp = Join-Path $env:LOCALAPPDATA "Programs\Ollama\ollama app.exe"
+        $ollamaExe = Join-Path $env:LOCALAPPDATA "Programs\Ollama\ollama.exe"
+
+        if (Test-Path $ollamaApp) {
+            Start-Process -FilePath $ollamaApp
+        }
+        elseif (Test-Path $ollamaExe) {
+            Start-Process -FilePath $ollamaExe -ArgumentList "serve" -WindowStyle Hidden
+        }
+        else {
+            Start-Process -FilePath "ollama.exe" -ArgumentList "serve" -WindowStyle Hidden -ErrorAction SilentlyContinue
+        }
+
+        # Wait up to 15 seconds for Ollama to become ready
+        for ($i = 0; $i -lt 30; $i++) {
+            try {
+                $res = Invoke-WebRequest -Uri "http://127.0.0.1:11434/api/version" -UseBasicParsing -TimeoutSec 1
+                if ($res.StatusCode -eq 200) {
+                    $ollamaReady = $true
+                    break
+                }
+            }
+            catch {
+            }
+            Start-Sleep -Milliseconds 500
+        }
+    }
+
+    if ($ollamaReady) {
+        Write-Host "Ollama ready."
+    }
+    else {
+        Write-Warning "Ollama is taking longer to start, continuing..."
+    }
+}
+
+
 # ==================================================
 # START ATRAEL
 # ==================================================
@@ -178,6 +229,13 @@ try {
     Write-Host ""
     Write-Host "Starting Atrael..."
     Write-Host ""
+
+
+    # --------------------------------------------------
+    # ENSURE OLLAMA IS RUNNING
+    # --------------------------------------------------
+
+    Ensure-OllamaRunning
 
 
     # --------------------------------------------------
