@@ -1082,6 +1082,28 @@ const clearChat =
       preferredLanguage = "es";
     }
 
+    const maleIdentifiers = [
+      "jorge", "gonzalo", "alonso", "alvaro", "álvaro", "raul", "raúl",
+      "mateo", "enrique", "manuel", "carlos", "pablo", "diego",
+      "antonio", "antônio", "julio", "júlio", "duarte", "rodrigo", "tiago", "fabio", "fábio",
+      "guy", "davis", "david", "mark", "george", "ryan", "andrew", "brian", "christopher",
+      "male"
+    ];
+
+    const femaleIdentifiers = [
+      "dalia", "elvira", "elena", "sabina", "helena", "laura", "paloma", "sofia", "camila", "monica", "mónica",
+      "francisca", "thalita", "raquel", "fernanda", "leticia", "letícia",
+      "jenny", "aria", "zira", "ana", "sonia", "sara", "emma", "michelle",
+      "female"
+    ];
+
+    const isMaleVoice = (voice) => {
+      const name = (voice.name || "").toLowerCase();
+      const hasMaleId = maleIdentifiers.some((id) => name.includes(id));
+      const hasFemaleId = femaleIdentifiers.some((id) => name.includes(id));
+      return hasMaleId && !hasFemaleId;
+    };
+
     const langVoices = availableVoices.filter(
       (voice) =>
         voice.lang
@@ -1092,14 +1114,17 @@ const clearChat =
     if (langVoices.length > 0) {
       return (
         langVoices.find((voice) =>
-          voice.name
-            ?.toLowerCase()
-            .includes("natural")
+          isMaleVoice(voice) &&
+          voice.name?.toLowerCase().includes("natural")
         ) ||
         langVoices.find((voice) =>
-          voice.name
-            ?.toLowerCase()
-            .includes("microsoft")
+          isMaleVoice(voice)
+        ) ||
+        langVoices.find((voice) =>
+          voice.name?.toLowerCase().includes("natural")
+        ) ||
+        langVoices.find((voice) =>
+          voice.name?.toLowerCase().includes("microsoft")
         ) ||
         langVoices[0]
       );
@@ -1107,14 +1132,11 @@ const clearChat =
 
     return (
       availableVoices.find((voice) =>
-        voice.name
-          ?.toLowerCase()
-          .includes("natural")
+        isMaleVoice(voice) &&
+        voice.name?.toLowerCase().includes("natural")
       ) ||
       availableVoices.find((voice) =>
-        voice.name
-          ?.toLowerCase()
-          .includes("microsoft")
+        isMaleVoice(voice)
       ) ||
       availableVoices[0]
     );
