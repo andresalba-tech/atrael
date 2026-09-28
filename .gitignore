@@ -10,6 +10,7 @@ frontend/dist/
 # Local files / uploads
 backend/local-data/
 local-data/
+backups/
 
 # Environment variables
 .env

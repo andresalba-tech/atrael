@@ -1908,6 +1908,84 @@ app.get(
 );
 
 // ----------------------------------------------------
+// PERSISTENT CONVERSATION STORAGE
+// ----------------------------------------------------
+
+const CONVERSATIONS_FILE = path.join(
+  __dirname,
+  "local-data",
+  "conversations.json"
+);
+
+app.get("/api/storage/conversations", (req, res) => {
+  try {
+    if (!fs.existsSync(CONVERSATIONS_FILE)) {
+      return res.json({
+        ok: true,
+        projects: [],
+        chats: [],
+      });
+    }
+
+    const raw = fs.readFileSync(CONVERSATIONS_FILE, "utf8");
+    const data = JSON.parse(raw);
+
+    res.json({
+      ok: true,
+      projects: Array.isArray(data.projects) ? data.projects : [],
+      chats: Array.isArray(data.chats) ? data.chats : [],
+    });
+  } catch (error) {
+    console.error("Storage read error:", error);
+    res.status(500).json({
+      ok: false,
+      error: error.message,
+    });
+  }
+});
+
+app.post("/api/storage/sync", (req, res) => {
+  try {
+    const { projects = [], chats = [] } = req.body;
+
+    if (!Array.isArray(projects) || !Array.isArray(chats)) {
+      return res.status(400).json({
+        ok: false,
+        error: "projects and chats must be arrays",
+      });
+    }
+
+    const payload = JSON.stringify(
+      {
+        projects,
+        chats,
+        updatedAt: new Date().toISOString(),
+      },
+      null,
+      2
+    );
+
+    const tempFile = `${CONVERSATIONS_FILE}.tmp`;
+    fs.writeFileSync(tempFile, payload, "utf8");
+    fs.renameSync(tempFile, CONVERSATIONS_FILE);
+
+    res.json({
+      ok: true,
+      count: {
+        projects: projects.length,
+        chats: chats.length,
+      },
+    });
+  } catch (error) {
+    console.error("Storage sync error:", error);
+    res.status(500).json({
+      ok: false,
+      error: error.message,
+    });
+  }
+});
+
+// ----------------------------------------------------
 // UPLOAD DOCUMENT
 // ----------------------------------------------------
 

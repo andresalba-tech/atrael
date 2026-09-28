@@ -20,7 +20,11 @@ $frontendPath = Join-Path $root "frontend"
 $backendPort = 3050
 $frontendPort = 5180
 
-$browserProfile = Join-Path $env:TEMP "AtraelBrowser"
+$browserProfile = Join-Path $env:LOCALAPPDATA "Atrael\BrowserProfile"
+
+if (-not (Test-Path $browserProfile)) {
+    New-Item -ItemType Directory -Path $browserProfile -Force | Out-Null
+}
 
 $backend = $null
 $frontend = $null
@@ -71,9 +75,9 @@ function Get-AtraelBrowserProcesses {
             ) -and
 
             $_.CommandLine -and
-
-            $_.CommandLine.Contains(
-                "AtraelBrowser"
+            (
+                $_.CommandLine.Contains("Atrael\BrowserProfile") -or
+                $_.CommandLine.Contains("AtraelBrowser")
             )
         }
 }
@@ -442,24 +446,33 @@ try {
     # WAIT UNTIL USER CLOSES ATRAEL WINDOW
     # --------------------------------------------------
 
+    $consecutiveMisses = 0
+
     while ($true) {
 
-        if (-not (Test-AtraelWindowOpen)) {
-            break
-        }
+        $browserProcesses = Get-AtraelBrowserProcesses
+        $procCount = if ($null -eq $browserProcesses) { 0 } else { @($browserProcesses).Count }
 
+        # Check if browser window or processes are still active
+        if ($procCount -eq 0 -and (-not (Test-AtraelWindowOpen))) {
+            $consecutiveMisses++
+            if ($consecutiveMisses -ge 3) {
+                break
+            }
+        }
+        else {
+            $consecutiveMisses = 0
+        }
 
         if ($backend.HasExited) {
             throw "Atrael backend stopped unexpectedly."
         }
 
-
         if ($frontend.HasExited) {
             throw "Atrael frontend stopped unexpectedly."
         }
 
-
-        Start-Sleep -Milliseconds 750
+        Start-Sleep -Milliseconds 1000
     }
 
 
