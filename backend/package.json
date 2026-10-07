@@ -1,6 +1,6 @@
 {
   "name": "atrael-backend",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Backend for Atrael, a local-first AI workstation powered by Ollama.",
   "main": "server.js",
   "scripts": {
