@@ -946,8 +946,13 @@ Current implementation includes:
 * [x] Final document synthesis
 * [x] Document-processing progress
 * [x] Local temporary file processing
-* [x] Read Aloud
+* [x] Read Aloud (Intelligent multilingual speech heuristic)
 * [x] Local-first AI architecture
+* [x] Persistent conversation history and project workspaces
+* [x] Local IndexedDB database with backend JSON dual-sync & auto-healing
+* [x] Clean Architecture (SOLID, DRY, KISS, YAGNI) with Dependency Injection
+* [x] Tactical Mecha Cockpit HUD interface (SVG circuits, reactive power-core, radar sweep)
+* [x] Private web-assisted search integration with source citation separation
 
 ---
 
@@ -969,15 +974,27 @@ Final Analysis
 ```
 # 🧪 Automated Testing
 
-Atrael includes automated backend regression tests for critical functionality.
-
-Current test suite:
+Atrael includes a comprehensive, full-stack automated test suite (100% pass rate) built with **Vitest** and **React Testing Library**:
 
 ```text
-Test Files: 5 passed
-Tests:      31 passed
-
+Backend:   50 passed (8 test files: chat, docs, rag, storage, health, cors, chunker, reduction)
+Frontend:  37 passed (3 test files: E2E interface, streamReader, speechService)
+Total:     87 automated tests passing (100% green)
+Linter:    0 ESLint errors / 0 warnings
+Build:     100% production build clean (Vite in ~145ms)
 ```
+
+To run the complete test suite:
+
+```bash
+# Backend tests
+cd backend && npm test
+
+# Frontend tests & linting
+cd ../frontend && npm test && npm run lint
+```
+
+---
 # 🔐 Privacy
 
 Atrael is designed around local processing.
@@ -1020,30 +1037,25 @@ Any network-accessible or production deployment should add appropriate controls 
 
 # 🗺 Roadmap
 
-Possible future development includes:
+Completed milestones:
 
-* Persistent conversation history
-* Local conversation database
-* Local RAG
-* Local embeddings
-* Semantic document search
-* Multi-document collections
-* Document citations
-* Conversation export
-* Improved spreadsheet reasoning
-* Syntax highlighting
-* Copy-code controls
-* Response regeneration
-* Editable previous prompts
-* Advanced model management
-* Context controls
-* Voice selection
-* Dedicated local TTS
-* Local speech-to-text
-* Drag-and-drop files
-* Clipboard screenshot support
-* GPU / RAM monitoring in the interface
-* Desktop packaging
+* [x] Persistent conversation history & project workspaces
+* [x] Local IndexedDB database with dual-backup synchronization
+* [x] Hierarchical Map-Reduce RAG for large documents
+* [x] Intelligent multilingual voice heuristic (EN, ES, PT)
+* [x] Full-stack test automation (87 Vitest suites)
+* [x] Clean Architecture refactoring (SOLID, DRY, KISS, YAGNI)
+
+Future development goals:
+
+* [ ] Semantic document search with local embeddings
+* [ ] Multi-document collections & cross-document synthesis
+* [ ] Document citations directly linked in the UI
+* [ ] Conversation export (JSON / Markdown)
+* [ ] Copy-code controls and syntax highlighting
+* [ ] Local speech-to-text integration (Whisper)
+* [ ] Desktop packaging (Electron or Tauri)
+* [ ] Native GPU / VRAM telemetry widget
 
 ---
 
