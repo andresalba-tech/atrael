@@ -1,4 +1,3 @@
-import { AVAILABLE_MODELS, AVAILABLE_MODES } from "../../config/models";
 
 export function Header({
   selectedModel,
@@ -44,41 +43,61 @@ export function Header({
       </div>
 
       <div className="header-right">
-        {/* MODEL SELECTORS */}
-        {Object.values(AVAILABLE_MODELS).map((modelItem) => (
-          <button
-            key={modelItem.id}
-            type="button"
-            className={`tactical-button model-button clear-button ${
-              selectedModel === modelItem.id ? "active" : ""
+        {/* MODEL TOGGLE */}
+        <button
+          type="button"
+          className={`tactical-button model-button clear-button ${selectedModel}`}
+          onClick={() =>
+            setSelectedModel((current) =>
+              current === "local" ? "atrael" : "local"
+            )
+          }
+          disabled={loading}
+          aria-label={
+            selectedModel === "local"
+              ? "LOCAL · Qwen 3.5 4B · click to switch to Atrael"
+              : "ATRAEL · Qwen 27B · click to switch to Local"
+          }
+          title={
+            selectedModel === "local"
+              ? "Qwen 3.5 4B · click to switch to Atrael"
+              : "Qwen 27B Uncensored · click to switch to Local"
+          }
+        >
+          <span
+            className={`button-led ${
+              selectedModel === "local" ? "led-blue" : "led-red"
             }`}
-            onClick={() => setSelectedModel(modelItem.id)}
-            disabled={loading}
-            aria-label={modelItem.ariaLabel}
-            title={modelItem.title}
-          >
-            <span className={`button-led ${modelItem.ledClass}`} />
-            <span className="button-text">{modelItem.buttonText}</span>
-          </button>
-        ))}
+          />
+          <span className="button-text">
+            {selectedModel === "local" ? "LOCAL" : "ATRAEL"}
+          </span>
+        </button>
 
-        {/* MODE SELECTORS */}
-        {Object.values(AVAILABLE_MODES).map((modeItem) => (
-          <button
-            key={modeItem.id}
-            type="button"
-            className={`tactical-button mode-button clear-button ${
-              mode === modeItem.id ? "active" : ""
-            }`}
-            onClick={() => setMode(modeItem.id)}
-            disabled={loading}
-            aria-label={modeItem.ariaLabel}
-            title={modeItem.title}
-          >
-            <span className="button-glyph">⚡</span>
-            <span className="button-text">{modeItem.buttonText}</span>
-          </button>
-        ))}
+        {/* MODE TOGGLE */}
+        <button
+          type="button"
+          className="tactical-button mode-button clear-button"
+          onClick={() =>
+            setMode((current) => (current === "fast" ? "quality" : "fast"))
+          }
+          disabled={loading}
+          aria-label={
+            mode === "fast"
+              ? "FAST · 16K · instant · click for Quality"
+              : "QUALITY · 32K · reasoning · click for Fast"
+          }
+          title={
+            mode === "fast"
+              ? "16K · instant · click for Quality"
+              : "32K · reasoning · click for Fast"
+          }
+        >
+          <span className="button-glyph">⚡</span>
+          <span className="button-text">
+            {mode === "fast" ? "FAST" : "QUALITY"}
+          </span>
+        </button>
 
         {/* WEB */}
         <button

@@ -27,159 +27,80 @@ beforeEach(() => {
 
 describe("Atrael UI", () => {
   it("renders the model and processing mode controls", () => {
-    render(
-      <App />
-    );
+    render(<App />);
 
     expect(
-      screen.getByRole(
-        "button",
-        {
-          name:
-            /LOCAL.*Qwen 3\.5 4B/i,
-        }
-      )
+      screen.getByRole("button", {
+        name: /LOCAL.*Qwen 3\.5 4B/i,
+      })
     ).toBeInTheDocument();
 
     expect(
-      screen.getByRole(
-        "button",
-        {
-          name:
-            /ATRAEL.*Qwen 27B/i,
-        }
-      )
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByRole(
-        "button",
-        {
-          name:
-            /FAST.*16K.*instant/i,
-        }
-      )
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByRole(
-        "button",
-        {
-          name:
-            /QUALITY.*32K.*reasoning/i,
-        }
-      )
+      screen.getByRole("button", {
+        name: /FAST.*16K.*instant/i,
+      })
     ).toBeInTheDocument();
   });
 
   it("switches the active model from LOCAL to ATRAEL", async () => {
-    const user =
-        userEvent.setup();
+    const user = userEvent.setup();
 
-    render(
-        <App />
-    );
+    render(<App />);
 
-    const localButton =
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /LOCAL.*Qwen 3\.5 4B/i,
-        }
-        );
+    const modelButton = screen.getByRole("button", {
+      name: /LOCAL.*Qwen 3\.5 4B/i,
+    });
 
-    const atraelButton =
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /ATRAEL.*Qwen 27B/i,
-        }
-        );
+    expect(modelButton).toHaveClass("local");
+    expect(modelButton).not.toHaveClass("atrael");
+
+    await user.click(modelButton);
 
     expect(
-        localButton
-    ).toHaveClass(
-        "active"
-    );
+      screen.getByRole("button", {
+        name: /ATRAEL.*Qwen 27B/i,
+      })
+    ).toBeInTheDocument();
+
+    expect(modelButton).toHaveClass("atrael");
+    expect(modelButton).not.toHaveClass("local");
+
+    await user.click(modelButton);
 
     expect(
-        atraelButton
-    ).not.toHaveClass(
-        "active"
-    );
+      screen.getByRole("button", {
+        name: /LOCAL.*Qwen 3\.5 4B/i,
+      })
+    ).toBeInTheDocument();
 
-    await user.click(
-        atraelButton
-    );
-
-    expect(
-        atraelButton
-    ).toHaveClass(
-        "active"
-    );
-
-    expect(
-        localButton
-    ).not.toHaveClass(
-        "active"
-    );
+    expect(modelButton).toHaveClass("local");
+    expect(modelButton).not.toHaveClass("atrael");
   });
 
   it("switches the active processing mode from FAST to QUALITY", async () => {
-    const user =
-        userEvent.setup();
+    const user = userEvent.setup();
 
-    render(
-        <App />
-    );
+    render(<App />);
 
-    const fastButton =
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /FAST.*16K.*instant/i,
-        }
-        );
+    const modeButton = screen.getByRole("button", {
+      name: /FAST.*16K.*instant/i,
+    });
 
-    const qualityButton =
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /QUALITY.*32K.*reasoning/i,
-        }
-        );
+    await user.click(modeButton);
 
     expect(
-        fastButton
-    ).toHaveClass(
-        "active"
-    );
+      screen.getByRole("button", {
+        name: /QUALITY.*32K.*reasoning/i,
+      })
+    ).toBeInTheDocument();
+
+    await user.click(modeButton);
 
     expect(
-        qualityButton
-    ).not.toHaveClass(
-        "active"
-    );
-
-    await user.click(
-        qualityButton
-    );
-
-    expect(
-        qualityButton
-    ).toHaveClass(
-        "active"
-    );
-
-    expect(
-        fastButton
-    ).not.toHaveClass(
-        "active"
-    );
+      screen.getByRole("button", {
+        name: /FAST.*16K.*instant/i,
+      })
+    ).toBeInTheDocument();
   });
 
   it("sends ATRAEL and QUALITY to the backend", async () => {
@@ -243,34 +164,20 @@ describe("Atrael UI", () => {
         },
     });
 
-    render(
-        <App />
+    render(<App />);
+
+    // Toggle model to ATRAEL
+    await user.click(
+      screen.getByRole("button", {
+        name: /LOCAL.*Qwen 3\.5 4B/i,
+      })
     );
 
-    const atraelButton =
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /ATRAEL.*Qwen 27B/i,
-        }
-        );
-
-    const qualityButton =
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /QUALITY.*32K.*reasoning/i,
-        }
-        );
-
+    // Toggle mode to QUALITY
     await user.click(
-        atraelButton
-    );
-
-    await user.click(
-        qualityButton
+      screen.getByRole("button", {
+        name: /FAST.*16K.*instant/i,
+      })
     );
 
     const textarea =
@@ -1644,23 +1551,15 @@ describe("Atrael UI", () => {
         );
 
     await user.click(
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /ATRAEL.*Qwen 27B/i,
-        }
-        )
+      screen.getByRole("button", {
+        name: /LOCAL.*Qwen 3\.5 4B/i,
+      })
     );
 
     await user.click(
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /QUALITY.*32K.*reasoning/i,
-        }
-        )
+      screen.getByRole("button", {
+        name: /FAST.*16K.*instant/i,
+      })
     );
 
     const documentInput =
@@ -2369,13 +2268,9 @@ describe("Atrael UI", () => {
         );
 
     await user.click(
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /ATRAEL.*Qwen 27B/i,
-        }
-        )
+      screen.getByRole("button", {
+        name: /LOCAL.*Qwen 3\.5 4B/i,
+      })
     );
 
     await user.type(
@@ -2569,13 +2464,9 @@ describe("Atrael UI", () => {
 
     // Switch to ATRAEL
     await user.click(
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /ATRAEL.*Qwen 27B/i,
-        }
-        )
+      screen.getByRole("button", {
+        name: /LOCAL.*Qwen 3\.5 4B/i,
+      })
     );
 
     // Second message uses ATRAEL
@@ -2720,13 +2611,9 @@ describe("Atrael UI", () => {
         );
 
     await user.click(
-        screen.getByRole(
-        "button",
-        {
-            name:
-            /ATRAEL.*Qwen 27B/i,
-        }
-        )
+      screen.getByRole("button", {
+        name: /LOCAL.*Qwen 3\.5 4B/i,
+      })
     );
 
     const documentInput =
